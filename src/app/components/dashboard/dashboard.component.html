@@ -1,0 +1,111 @@
+
+<div class="space-y-6">
+  
+  <!-- Header Section -->
+  <div class="mb-6 md:mb-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1 md:mb-2 transition-colors">Overview</h2>
+    <p class="text-sm md:text-lg text-gray-500 dark:text-gray-400 transition-colors">Track your job search progress at a glance</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+    
+    <!-- Stat Card 1 -->
+    <div class="bg-white dark:bg-[#151A23] p-4 sm:p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+      <div class="flex justify-between items-start mb-2 sm:mb-4">
+        <span class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium">Total Applications</span>
+        <div class="p-1.5 sm:p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-lg transition-colors">
+          <i class="ph ph-briefcase text-indigo-500 dark:text-indigo-400 text-lg sm:text-xl"></i>
+        </div>
+      </div>
+      <div class="text-xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1 transition-colors">{{ stats().totalApplications }}</div>
+    </div>
+
+    <!-- Stat Card 2 -->
+    <div class="bg-white dark:bg-[#151A23] p-4 sm:p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+      <div class="flex justify-between items-start mb-2 sm:mb-4">
+        <span class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium">Interviews</span>
+        <div class="p-1.5 sm:p-2 bg-purple-50 dark:bg-purple-500/10 rounded-lg transition-colors">
+          <i class="ph ph-target text-purple-500 dark:text-purple-400 text-lg sm:text-xl"></i>
+        </div>
+      </div>
+      <div class="text-xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1 transition-colors">{{ stats().interviews }}</div>
+      <div class="text-[10px] sm:text-xs text-red-500 dark:text-red-400 font-medium">{{ interviewRate }}% interview rate</div>
+    </div>
+
+    <!-- Stat Card 3 -->
+    <div class="bg-white dark:bg-[#151A23] p-4 sm:p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+      <div class="flex justify-between items-start mb-2 sm:mb-4">
+        <span class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium">Offers Received</span>
+        <div class="p-1.5 sm:p-2 bg-green-50 dark:bg-green-500/10 rounded-lg transition-colors">
+          <i class="ph ph-medal text-green-500 dark:text-green-400 text-lg sm:text-xl"></i>
+        </div>
+      </div>
+      <div class="text-xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1 transition-colors">{{ stats().offers }}</div>
+      <div class="text-[10px] sm:text-xs text-green-500 dark:text-green-400 font-medium">{{ offerRate }}% conversion</div>
+    </div>
+
+    <!-- Stat Card 4 -->
+    <div class="bg-white dark:bg-[#151A23] p-4 sm:p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+      <div class="flex justify-between items-start mb-2 sm:mb-4">
+        <span class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium">Active Pipeline</span>
+        <div class="p-1.5 sm:p-2 bg-blue-50 dark:bg-blue-500/10 rounded-lg transition-colors">
+          <i class="ph ph-trend-up text-blue-500 dark:text-blue-400 text-lg sm:text-xl"></i>
+        </div>
+      </div>
+      <div class="text-xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1 transition-colors">{{ stats().activePipeline }}</div>
+    </div>
+
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Chart 1: Status -->
+    <div class="bg-white dark:bg-[#151A23] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col h-80 transition-colors duration-300">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-gray-200 mb-4 transition-colors">Applications by Status</h3>
+      <div class="flex-1 min-h-0">
+        <app-donut-chart [data]="statusData()" [colors]="statusColors" [strokeColor]="chartStrokeColor()"></app-donut-chart>
+      </div>
+      <div class="flex justify-center gap-3 mt-4 text-xs flex-wrap">
+        @for (item of statusData(); track item.name; let i = $index) {
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full" [style.background-color]="statusColors[i % statusColors.length]"></span>
+            <span class="text-gray-500 dark:text-gray-400">{{ item.name }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Chart 2: Monthly -->
+    <div class="bg-white dark:bg-[#151A23] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col h-80 transition-colors duration-300">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-gray-200 mb-4 transition-colors">Monthly Applications</h3>
+      <div class="flex-1 min-h-0">
+        <app-bar-chart [data]="monthlyData()" color="#6366f1" [gridColor]="gridColor()" [textColor]="textColor()"></app-bar-chart>
+      </div>
+      <div class="flex justify-center gap-4 mt-4 text-xs">
+          <!-- Legend if needed, but bars have axis labels -->
+      </div>
+    </div>
+
+    <!-- Chart 3: Interview Progress -->
+    <div class="bg-white dark:bg-[#151A23] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col h-80 transition-colors duration-300">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-gray-200 mb-4 transition-colors">Interview Progress</h3>
+      <div class="flex-1 min-h-0">
+        <app-donut-chart [data]="interviewData()" [colors]="interviewColors" [innerRadiusRatio]="0.7" [strokeColor]="chartStrokeColor()"></app-donut-chart>
+      </div>
+      <div class="flex justify-center gap-3 mt-4 text-xs">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+          <span class="text-gray-500 dark:text-gray-400">Interviewed: {{ interviewData()[0].value }}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+          <span class="text-gray-500 dark:text-gray-400">Not Interviewed: {{ interviewData()[1].value }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
