@@ -49,10 +49,10 @@ export class SignupComponent {
     } catch (err: any) {
       this.isLoading.set(false);
 
-      if (err.status === 400 && typeof err.error === 'string') {
-        this.errorMessage.set(err.error);
+      if (err.error && err.error.message) {
+        this.errorMessage.set(err.error.message);
       } else {
-        this.errorMessage.set('Something went wrong. Please try again.');
+        this.errorMessage.set('Signup failed. Please try again.');
       }
     }
   }

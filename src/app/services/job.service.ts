@@ -1,7 +1,8 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 export interface Job {
   id: string;
@@ -25,16 +26,23 @@ export interface DashboardStats {
   offers: number;
 }
 
-interface JobDataResponse {
-  jobs: Job[];
+export interface ChartData {
+  name: string;
+  value: number;
+}
+
+export interface DashboardResponse {
   stats: DashboardStats;
+  statusChart: ChartData[];
+  monthlyChart: ChartData[];
+  interviewChart: ChartData[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class JobService {
   private readonly API = environment.apiBaseUrl;
-
   private http = inject(HttpClient);
+  private router = inject(Router);
   private apiUrl = `${this.API}/api/jobs`;
 
   private jobsSignal = signal<Job[]>([]);
@@ -47,40 +55,99 @@ export class JobService {
     offers: 0,
   });
 
+  readonly statusDistribution = signal<ChartData[]>([]);
+  readonly monthlyApplications = signal<ChartData[]>([]);
+
+  readonly interviewProgress = signal<ChartData[]>([
+    { name: 'Interviewed', value: 0 },
+    { name: 'Not Interviewed', value: 0 },
+  ]);
+
   showModal = signal(false);
   selectedJob = signal<Job | null>(null);
 
+  private dashboardLoaded = false;
+  private listLoaded = false;
+
   constructor() {}
 
-  async refreshData() {
+  private refreshActiveView() {
+    const currentUrl = this.router.url;
+
+    this.dashboardLoaded = false;
+    this.listLoaded = false;
+
+    if (currentUrl.includes('/dashboard')) {
+      this.loadDashboard(true);
+    } else if (currentUrl.includes('/applications')) {
+      this.loadJobs(true);
+    } else {
+      this.loadDashboard(true);
+      this.loadJobs(true);
+    }
+  }
+
+  async loadDashboard(force = false) {
+    if (this.dashboardLoaded && !force) return;
+
     try {
       const data = await firstValueFrom(
-        this.http.get<JobDataResponse>(this.apiUrl)
+        this.http.get<DashboardResponse>(`${this.apiUrl}/dashboard`)
       );
-      this.jobsSignal.set(data.jobs);
+
       this.dashboardStats.set(data.stats);
-    } catch (err) {
-      console.error('Error loading data:', err);
+      this.statusDistribution.set(data.statusChart);
+      this.monthlyApplications.set(data.monthlyChart);
+
+      if (data.interviewChart && data.interviewChart.length >= 2) {
+        this.interviewProgress.set(data.interviewChart);
+      }
+
+      this.dashboardLoaded = true;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async loadJobs(force = false) {
+    if (this.listLoaded && !force) return;
+
+    try {
+      const data = await firstValueFrom(this.http.get<Job[]>(this.apiUrl));
+      this.jobsSignal.set(data);
+      this.listLoaded = true;
+    } catch (e) {
+      console.error(e);
     }
   }
 
   clearState() {
     this.jobsSignal.set([]);
+
     this.dashboardStats.set({
       totalApplications: 0,
       activePipeline: 0,
       interviews: 0,
       offers: 0,
     });
+
+    this.statusDistribution.set([]);
+    this.monthlyApplications.set([]);
+    this.interviewProgress.set([
+      { name: 'Interviewed', value: 0 },
+      { name: 'Not Interviewed', value: 0 },
+    ]);
+
+    this.dashboardLoaded = false;
+    this.listLoaded = false;
     this.showModal.set(false);
     this.selectedJob.set(null);
   }
 
-
   async addJob(job: any) {
     try {
       await firstValueFrom(this.http.post(this.apiUrl, job));
-      this.refreshData();
+      this.refreshActiveView();
     } catch (err) {
       console.error(err);
     }
@@ -89,7 +156,7 @@ export class JobService {
   async updateJob(job: Job) {
     try {
       await firstValueFrom(this.http.put(`${this.apiUrl}/${job.id}`, job));
-      this.refreshData();
+      this.refreshActiveView();
     } catch (err) {
       console.error(err);
     }
@@ -98,7 +165,7 @@ export class JobService {
   async deleteJob(id: string) {
     try {
       await firstValueFrom(this.http.delete(`${this.apiUrl}/${id}`));
-      this.refreshData();
+      this.refreshActiveView();
     } catch (err) {
       console.error(err);
     }
@@ -113,36 +180,4 @@ export class JobService {
     this.showModal.set(false);
     this.selectedJob.set(null);
   }
-
-  readonly statusDistribution = computed(() => {
-    const counts: Record<string, number> = {};
-    this.jobsSignal().forEach((job) => {
-      counts[job.status] = (counts[job.status] || 0) + 1;
-    });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
-  });
-
-  readonly monthlyApplications = computed(() => {
-    const counts: Record<string, number> = {};
-    const sorted = [...this.jobsSignal()].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-    sorted.forEach((job) => {
-      const key = new Date(job.date).toLocaleDateString('en-US', {
-        month: 'short',
-        year: '2-digit',
-      });
-      counts[key] = (counts[key] || 0) + 1;
-    });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
-  });
-
-  readonly interviewProgress = computed(() => {
-    const interviewed = this.jobsSignal().filter((j) => j.stage >= 3).length;
-    const total = this.jobsSignal().length;
-    return [
-      { name: 'Interviewed', value: interviewed },
-      { name: 'Not Interviewed', value: total > 0 ? total - interviewed : 0 },
-    ];
-  });
 }

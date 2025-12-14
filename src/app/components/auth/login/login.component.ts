@@ -33,10 +33,8 @@ export class LoginComponent {
       });
     } catch (err: any) {
       this.isLoading.set(false);
-      if (err.status === 400 || err.status === 401) {
-        this.errorMessage.set(
-          typeof err.error === 'string' ? err.error : 'Invalid credentials'
-        );
+      if (err.error && err.error.message) {
+        this.errorMessage.set(err.error.message);
       } else {
         this.errorMessage.set('Login failed. Please try again.');
       }

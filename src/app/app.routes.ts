@@ -2,30 +2,35 @@ import { Routes } from '@angular/router';
 import { LandingComponent } from './components/landing/landing.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component'; // Existing
-import { ApplicationListComponent } from './components/application-list/application-list.component'; // Existing
-import { inject } from '@angular/core';
-import { AuthService } from './services/auth.service';
-import { Router } from '@angular/router';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ApplicationListComponent } from './components/application-list/application-list.component';
 import { LoginSuccessComponent } from './components/auth/login-success/login-success.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
-
-const authGuard = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-  if (authService.isAuthenticated()) return true;
-  router.navigate(['/login']);
-  return false;
-};
+import { authGuard } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent },
+  { 
+    path: '', 
+    component: LandingComponent
+  },
+  { 
+    path: 'login', 
+    component: LoginComponent, 
+    canActivate: [guestGuard] 
+  },
+  { 
+    path: 'signup', 
+    component: SignupComponent, 
+    canActivate: [guestGuard] 
+  },
+  { 
+    path: 'login-success', 
+    component: LoginSuccessComponent, 
+    canActivate: [guestGuard] 
+  },
   
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'login-success', component: LoginSuccessComponent },
-
   {
     path: 'app',
     canActivate: [authGuard],

@@ -22,7 +22,8 @@ export class DashboardComponent implements OnInit {
   interviewData = this.jobService.interviewProgress;
 
   ngOnInit() {
-    this.jobService.refreshData();
+    this.jobService.loadDashboard();
+    // this.jobService.loadJobs();
   }
 
   chartStrokeColor = computed(() =>

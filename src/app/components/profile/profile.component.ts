@@ -87,6 +87,7 @@ export class ProfileComponent {
 
   async onUpdateProfile() {
     this.resetMessages();
+    this.isUploading.set(true);
     try {
       await this.authService.updateProfile(
         this.profileForm().name,
@@ -97,12 +98,17 @@ export class ProfileComponent {
       this.successMessage.set('Profile updated successfully!');
       this.isEditingProfile.set(false);
 
-      // Cleanup
       this.pendingFile = null;
       this.localPreviewUrl.set(null);
       this.imageTimestamp.set(Date.now());
-    } catch (e) {
-      this.errorMessage.set('Failed to update profile.');
+    } catch (err: any) {
+      if (err.error && err.error.message) {
+        this.errorMessage.set(err.error.message);
+      } else {
+        this.errorMessage.set('Failed to update profile. Please try again.');
+      }
+    } finally {
+      this.isUploading.set(false);
     }
   }
 
@@ -142,7 +148,11 @@ export class ProfileComponent {
       });
       this.authService.fetchUserProfile();
     } catch (err: any) {
-      this.errorMessage.set(err.error || 'Failed to change password.');
+      if (err.error && err.error.message) {
+        this.errorMessage.set(err.error.message);
+      } else {
+        this.errorMessage.set('Failed to update password. Please try again.');
+      }
     }
   }
 

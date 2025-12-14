@@ -70,7 +70,9 @@ export class BarChartComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     d3.select(element).selectAll('*').remove();
 
-    if (!this.data.length) return;
+    if (!this.data || this.data.length === 0) {
+      return;
+    }
 
     const rect = element.getBoundingClientRect();
     const clientWidth = rect.width;

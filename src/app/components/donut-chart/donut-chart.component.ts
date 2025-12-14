@@ -74,7 +74,10 @@ export class DonutChartComponent
 
     d3.select(element).selectAll('*').remove();
 
-    if (!this.data.length) return;
+    if (!this.data || this.data.length === 0) {
+      this.renderEmptyChart(element);
+      return;
+    }
 
     const totalValue = this.data.reduce((acc, curr) => acc + curr.value, 0);
     if (totalValue === 0) {

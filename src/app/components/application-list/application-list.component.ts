@@ -20,9 +20,6 @@ type SortDirection = 'asc' | 'desc';
   styleUrl: './application-list.component.css',
 })
 export class ApplicationListComponent implements OnInit {
-  ngOnInit() {
-    this.jobService.refreshData();
-  }
 
   private jobService = inject(JobService);
 
@@ -36,6 +33,10 @@ export class ApplicationListComponent implements OnInit {
   activeMenuId = signal<string | null>(null);
 
   jobs = this.jobService.jobs;
+
+  ngOnInit() {
+    this.jobService.loadJobs();
+  }
 
   filteredJobs = computed(() => {
     let result = this.jobs();
