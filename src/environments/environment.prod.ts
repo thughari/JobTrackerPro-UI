@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.thughari.com' //TODO: Update with actual production API URL
+  apiBaseUrl: 'https://jobtracker-service-963261513098.asia-south1.run.app'
 };
