@@ -6,7 +6,13 @@
   <script>
     const base = '/JobTrackerPro-UI';
     const path = location.pathname.replace(base, '');
-    location.replace(base + '/?redirect=' + path);
+    const search = location.search;
+    const hash = location.hash;
+
+    location.replace(
+      base + '/?redirect=' +
+      encodeURIComponent(path + search + hash)
+    );
   </script>
 </head>
 <body></body>
