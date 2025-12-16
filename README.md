@@ -1,27 +1,55 @@
-# Jobtrackerpro
+# JobTrackerPro UI 🎨
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
+![Angular](https://img.shields.io/badge/Angular-17+-red)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 
-## Development server
+The modern, responsive frontend for **JobTrackerPro**. Built with Angular and TailwindCSS, it provides a seamless user experience for tracking job applications and visualizing career progress.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🔗 Quick Links
 
-## Code scaffolding
+*   **Live Application:** [https://thughari.github.io/JobTrackerPro-UI](https://thughari.github.io/JobTrackerPro-UI)
+*   **Backend Repository:** [github.com/thughari/JobTrackerPro](https://github.com/thughari/JobTrackerPro)
+*   **Backend API URL:** [jobtracker-service-963261513098.asia-south1.run.app](https://jobtracker-service-963261513098.asia-south1.run.app)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## ✨ Key Features
 
-## Build
+*   **📊 Interactive Dashboard:** Real-time statistics using **D3.js** interactive charts.
+*   **👤 Advanced Profile:** Atomic updates for profile data, supporting file uploads (R2) and external URLs.
+*   **🌗 Theming:** Built-in **Dark Mode** support persisted via LocalStorage.
+*   **⚡ Optimistic UI:** Smart caching and context-aware data fetching to minimize network latency.
+*   **🔒 Security:** JWT-based authentication with route guards (`AuthGuard`, `GuestGuard`).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🛠️ Tech Stack
 
-## Running unit tests
+*   **Framework:** Angular 17+ (Standalone Components, Signals)
+*   **Styling:** TailwindCSS
+*   **Icons:** Phosphor Icons
+*   **Charts:** D3.js
+*   **Deployment:** GitHub Pages
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🚀 Getting Started
 
-## Running end-to-end tests
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/thughari/JobTrackerPro-UI.git
+    cd JobTrackerPro-UI
+    ```
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
+3.  **Configure API**
+    Update `src/environments/environment.prod.ts` to point to your Cloud Run URL.
+4.  **Run Development Server**
+    ```bash
+    ng serve
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📂 Project Structure
+```text
+src/app/
+├── components/          # Standalone UI Components (Auth, Dashboard, Profile)
+├── services/            # API Communication & Signal Store
+├── core/                # Guards & Interceptors
+└── shared/              # Pipes and Utilities
