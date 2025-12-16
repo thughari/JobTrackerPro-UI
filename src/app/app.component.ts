@@ -12,16 +12,12 @@ import { Job, JobService } from './services/job.service';
 import { ThemeService } from './services/theme.service';
 import { AuthService } from './services/auth.service';
 import { filter } from 'rxjs';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ApplicationListComponent } from './components/application-list/application-list.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
-    DashboardComponent,
-    ApplicationListComponent,
     JobModalComponent,
     RouterOutlet,
     RouterLink,

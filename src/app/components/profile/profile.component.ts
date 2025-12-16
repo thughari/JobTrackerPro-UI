@@ -156,10 +156,13 @@ export class ProfileComponent {
     }
   }
 
-
   openImageModal() {
     const currentUrl = this.profileForm().imageUrl;
-    if (currentUrl && !currentUrl.includes(this.API)) {
+    const isExternal =
+      currentUrl &&
+      !currentUrl.includes(this.API) &&
+      !currentUrl.includes('r2.dev');
+    if (isExternal) {
       this.tempImageUrl.set(currentUrl);
     } else {
       this.tempImageUrl.set('');
@@ -188,7 +191,8 @@ export class ProfileComponent {
     }
 
     const url = this.profileForm().imageUrl;
-    if (url && url.includes(this.API)) {
+    const isManaged = url.includes(this.API) || url.includes('r2.dev');
+    if (isManaged) {
       return `${url}?t=${this.imageTimestamp()}`;
     }
     return url || '';

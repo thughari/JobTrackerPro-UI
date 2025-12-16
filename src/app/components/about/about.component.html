@@ -1,0 +1,141 @@
+
+<div class="min-h-screen bg-[#0B0E14] text-gray-300 font-sans selection:bg-indigo-500/30">
+
+  <!-- PUBLIC NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-[#0B0E14]/80 backdrop-blur-md border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo (Links Home) -->
+        <a routerLink="/" class="flex items-center gap-3 group cursor-pointer">
+          <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+            <i class="ph ph-briefcase text-2xl"></i>
+          </div>
+          <span class="text-xl font-bold text-white tracking-tight">JobTrackPro</span>
+        </a>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-4">
+          @if (authService.isAuthenticated()) {
+            <!-- If Logged In -->
+            <a routerLink="/app/dashboard" class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors shadow-lg shadow-indigo-500/20 flex items-center gap-2">
+              <i class="ph ph-squares-four text-lg"></i>
+              Dashboard
+            </a>
+          } @else {
+            <!-- If Guest -->
+            <a routerLink="/login" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Log in</a>
+            <a routerLink="/signup" class="px-5 py-2.5 rounded-lg bg-white text-gray-900 hover:bg-gray-100 text-sm font-medium transition-colors">
+              Get Started
+            </a>
+          }
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-4xl mx-auto space-y-8 animate-fade-in pb-10">
+
+  <!-- Hero Section -->
+  <div class="text-center py-10 space-y-4">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-600 text-white shadow-xl shadow-indigo-500/20 mb-4">
+      <i class="ph ph-briefcase text-3xl"></i>
+    </div>
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">JobTrackPro</h1>
+    <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+      The enterprise-grade solution to organize your job search, visualize your progress, and land your dream role.
+    </p>
+  </div>
+
+  <!-- The "Why" Section -->
+  <div class="bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-sm">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Why we built this</h2>
+    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+      Searching for a job is a full-time job. Spreadsheets are messy, and generic to-do lists don't capture the nuance of interview stages, salary negotiations, and follow-ups.
+      <br><br>
+      JobTrackPro was built to bring <strong>clarity to the chaos</strong>. We provide a centralized hub where you can track every application, analyze your conversion rates, and manage your professional identity securely.
+    </p>
+  </div>
+
+  <!-- Tech Stack Grid (Showcase your skills!) -->
+  <div>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 px-2">Powered by Modern Tech</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      
+      <!-- Backend -->
+      <div class="p-6 bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-xl hover:border-indigo-500/50 transition-colors group">
+        <div class="flex items-center gap-3 mb-3">
+          <i class="ph ph-server text-2xl text-indigo-500 group-hover:scale-110 transition-transform"></i>
+          <h3 class="font-semibold text-gray-900 dark:text-white">Spring Boot 3</h3>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Robust REST API with multi-threaded analytics, Spring Security 6, and JPA optimized queries.
+        </p>
+      </div>
+
+      <!-- Frontend -->
+      <div class="p-6 bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-xl hover:border-red-500/50 transition-colors group">
+        <div class="flex items-center gap-3 mb-3">
+          <i class="ph ph-browsers text-2xl text-red-500 group-hover:scale-110 transition-transform"></i>
+          <h3 class="font-semibold text-gray-900 dark:text-white">Angular 17</h3>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Reactive architecture using Signals, standalone components, and TailwindCSS for styling.
+        </p>
+      </div>
+
+      <!-- Cloud -->
+      <div class="p-6 bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-xl hover:border-orange-500/50 transition-colors group">
+        <div class="flex items-center gap-3 mb-3">
+          <i class="ph ph-cloud text-2xl text-orange-500 group-hover:scale-110 transition-transform"></i>
+          <h3 class="font-semibold text-gray-900 dark:text-white">Cloudflare R2</h3>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          S3-compatible object storage for secure, scalable, and high-performance asset delivery.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Features List -->
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="p-6 bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-900/20 dark:to-[#151A23] border border-indigo-100 dark:border-indigo-900/30 rounded-xl">
+      <h3 class="font-bold text-gray-900 dark:text-white mb-2">🔐 Enterprise Security</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-300">
+        Hybrid OAuth2 (Google/GitHub) + JWT authentication ensures your data remains private and secure.
+      </p>
+    </div>
+    <div class="p-6 bg-gradient-to-br from-green-50 to-white dark:from-green-900/20 dark:to-[#151A23] border border-green-100 dark:border-green-900/30 rounded-xl">
+      <h3 class="font-bold text-gray-900 dark:text-white mb-2">⚡ Real-time Analytics</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-300">
+        Instant insights into your interview pipeline using D3.js visualization and smart caching strategies.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer / Credits -->
+  <div class="text-center pt-8 border-t border-gray-200 dark:border-gray-800">
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      Designed & Developed by <span class="text-gray-900 dark:text-white font-medium">Hari Thatikonda</span>
+    </p>
+    <div class="flex justify-center gap-4 mt-4">
+      <a href="https://github.com/thughari" target="_blank" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+        <i class="ph ph-github-logo text-2xl"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/hari-thatikonda/" target="_blank" class="text-gray-400 hover:text-blue-600 transition-colors">
+        <i class="ph ph-linkedin-logo text-2xl"></i>
+      </a>
+      <a href="https://thughari.github.io/" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors">
+        <i class="ph ph-globe text-2xl"></i>
+      </a>
+    </div>
+    <p class="text-xs text-gray-400 mt-6">
+      v1.0.0 • © 2025 JobTrackPro
+    </p>
+  </div>
+
+</div>
+
+</div>

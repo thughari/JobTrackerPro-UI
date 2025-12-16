@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#0B0E14] text-white selection:bg-indigo-500/30 font-sans">
+<div class="min-h-screen bg-[#0B0E14] text-white selection:bg-indigo-500/30 font-sans flex flex-col">
 
   <nav class="fixed w-full z-50 bg-[#0B0E14]/80 backdrop-blur-md border-b border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,6 +11,7 @@
           <span class="text-xl font-bold tracking-tight">JobTrackPro</span>
         </div>
         <div class="flex items-center gap-6">
+          <a routerLink="/about" class="hidden md:block text-sm font-medium text-gray-400 hover:text-white transition-colors">About</a>
           <a routerLink="/login" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Log in</a>
           <a routerLink="/signup"
             class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-medium transition-all shadow-lg shadow-indigo-500/25">
@@ -21,7 +22,7 @@
     </div>
   </nav>
 
-  <section class="relative pt-48 pb-32 overflow-hidden text-center">
+  <section class="relative pt-48 pb-32 overflow-hidden text-center flex-grow">
     <div
       class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] -z-10">
     </div>
@@ -73,4 +74,21 @@
       </div>
     </div>
   </section>
+
+  <footer class="border-t border-white/5 bg-[#0B0E14] py-10 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+      
+      <div class="flex items-center gap-2 text-gray-500 text-sm">
+        <span>© 2025 JobTrackPro.</span>
+        <span class="hidden md:inline">All rights reserved.</span>
+      </div>
+
+      <div class="flex items-center gap-8">
+        <a routerLink="/about" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">About</a>
+        <a href="https://github.com/thughari/JobTrackerPro-UI" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">GitHub</a>
+      </div>
+
+    </div>
+  </footer>
+
 </div>

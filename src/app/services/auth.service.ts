@@ -76,7 +76,7 @@ export class AuthService {
     const jobService = this.injector.get(JobService);
     jobService.clearState();
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   async updateProfile(name: string, imageUrl: string, file: File | null) {

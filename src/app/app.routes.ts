@@ -9,11 +9,16 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
+import { AboutComponent } from './components/about/about.component';
 
 export const routes: Routes = [
   { 
     path: '', 
     component: LandingComponent
+  },
+  { 
+    path: 'about', 
+    component: AboutComponent 
   },
   { 
     path: 'login', 
