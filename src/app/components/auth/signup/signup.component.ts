@@ -57,6 +57,10 @@ export class SignupComponent {
     }
   }
 
+  clearMessages() {
+    this.errorMessage.set('');
+}
+
   socialSignUp(provider: string) {
     window.location.href = `${this.API}/oauth2/authorization/${provider}`;
   }

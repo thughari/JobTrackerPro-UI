@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="text-xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1 transition-colors">{{ stats().interviews }}</div>
-      <div class="text-[10px] sm:text-xs text-red-500 dark:text-red-400 font-medium">{{ interviewRate }}% interview rate</div>
+      <div class="text-[10px] sm:text-xs text-red-500 dark:text-red-400 font-medium">{{ interviewRate() }}% interview rate</div>
     </div>
 
     <!-- Stat Card 3 -->
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="text-xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1 transition-colors">{{ stats().offers }}</div>
-      <div class="text-[10px] sm:text-xs text-green-500 dark:text-green-400 font-medium">{{ offerRate }}% conversion</div>
+      <div class="text-[10px] sm:text-xs text-green-500 dark:text-green-400 font-medium">{{ offerRate() }}% conversion</div>
     </div>
 
     <!-- Stat Card 4 -->
@@ -84,7 +84,6 @@
         <app-bar-chart [data]="monthlyData()" color="#6366f1" [gridColor]="gridColor()" [textColor]="textColor()"></app-bar-chart>
       </div>
       <div class="flex justify-center gap-4 mt-4 text-xs">
-          <!-- Legend if needed, but bars have axis labels -->
       </div>
     </div>
 

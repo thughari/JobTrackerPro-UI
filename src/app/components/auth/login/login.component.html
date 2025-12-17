@@ -17,7 +17,10 @@
       @if (errorMessage()) {
       <div class="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center gap-3 animate-fade-in">
         <i class="ph ph-warning-circle text-red-500 text-xl"></i>
-        <span class="text-sm text-red-400 font-medium">{{ errorMessage() }}</span>
+        <span class="text-sm text-red-400 font-medium flex-1">{{ errorMessage() }}</span>
+        <button (click)="clearMessages()" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200">
+          <i class="ph ph-x text-lg"></i>
+        </button>
       </div>
       }
 

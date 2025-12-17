@@ -7,14 +7,24 @@
 
     @if (successMessage()) {
     <div
-        class="p-4 bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400 rounded-lg flex items-center gap-2">
-        <i class="ph ph-check-circle text-xl"></i> {{ successMessage() }}
+        class="p-4 bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400 rounded-lg flex items-center justify-between gap-2 animate-fade-in">
+        <div class="flex items-center gap-2">
+            <i class="ph ph-check-circle text-xl"></i> {{ successMessage() }}
+        </div>
+        <button (click)="clearMessages()" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200">
+            <i class="ph ph-x text-lg"></i>
+        </button>
     </div>
     }
     @if (errorMessage()) {
     <div
-        class="p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded-lg flex items-center gap-2">
-        <i class="ph ph-warning-circle text-xl"></i> {{ errorMessage() }}
+        class="p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded-lg flex items-center justify-between gap-2 animate-fade-in">
+        <div class="flex items-center gap-2">
+            <i class="ph ph-warning-circle text-xl"></i> {{ errorMessage() }}
+        </div>
+        <button (click)="clearMessages()" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200">
+            <i class="ph ph-x text-lg"></i>
+        </button>
     </div>
     }
 
@@ -36,7 +46,7 @@
         <div class="p-6">
 
             @if (!isEditingProfile()) {
-            <div class="relative flex-shrink-0">
+            <div class="flex items-start gap-6">
                 <div class="relative">
                     @if (authService.userProfile()?.imageUrl) {
                     <img [src]="getProfileImage()"

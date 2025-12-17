@@ -23,8 +23,23 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.jobService.loadDashboard();
-    // this.jobService.loadJobs();
   }
+
+  interviewRate = computed(() => {
+    const total = this.stats().totalApplications;
+    const interviews = this.stats().interviews;
+
+    if (!total || total === 0) return 0;
+    return Math.round((interviews / total) * 100);
+  });
+
+  offerRate = computed(() => {
+    const interviews = this.stats().interviews;
+    const offers = this.stats().offers;
+
+    if (!interviews || interviews === 0) return 0;
+    return Math.round((offers / interviews) * 100);
+  });
 
   chartStrokeColor = computed(() =>
     this.themeService.isDarkMode() ? '#151A23' : '#ffffff'
@@ -36,9 +51,6 @@ export class DashboardComponent implements OnInit {
     this.themeService.isDarkMode() ? '#6b7280' : '#6b7280'
   );
 
-  statusColors = ['#6366f1', '#a855f7', '#f59e0b', '#ef4444', '#10b981'];
+  statusColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#a855f7'];
   interviewColors = ['#10b981', '#d1d5db'];
-
-  interviewRate = 20;
-  offerRate = 20;
 }

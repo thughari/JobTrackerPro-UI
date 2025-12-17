@@ -71,6 +71,7 @@ export class ProfileComponent {
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
         this.errorMessage.set('Image size must be less than 5MB');
+        this.closeImageModal();
         return;
       }
 
@@ -110,6 +111,11 @@ export class ProfileComponent {
     } finally {
       this.isUploading.set(false);
     }
+  }
+
+  clearMessages() {
+    this.successMessage.set('');
+    this.errorMessage.set('');
   }
 
   toggleEditPassword() {

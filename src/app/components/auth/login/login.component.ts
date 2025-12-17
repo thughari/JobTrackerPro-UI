@@ -41,6 +41,10 @@ export class LoginComponent {
     }
   }
 
+  clearMessages() {
+    this.errorMessage.set('');
+}
+
   socialLogin(provider: string) {
     window.location.href = `${this.API}/oauth2/authorization/${provider}`;
   }
