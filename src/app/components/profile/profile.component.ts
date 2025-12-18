@@ -37,8 +37,11 @@ export class ProfileComponent {
   errorMessage = signal('');
 
   pendingFile: File | null = null;
-
   localPreviewUrl = signal<string | null>(null);
+
+  private messageTimeout: any;
+
+  userProfile = this.authService.userProfile();
 
   constructor() {
     effect(
@@ -58,20 +61,41 @@ export class ProfileComponent {
     );
   }
 
+  showMessage(type: 'success' | 'error', message: string) {
+    this.clearMessages();
+
+    if (type === 'success') {
+      this.successMessage.set(message);
+    } else {
+      this.errorMessage.set(message);
+    }
+
+    this.messageTimeout = setTimeout(() => {
+      this.clearMessages();
+    }, 5000);
+  }
+
+  clearMessages() {
+    this.successMessage.set('');
+    this.errorMessage.set('');
+    if (this.messageTimeout) {
+      clearTimeout(this.messageTimeout);
+    }
+  }
+
   toggleEditProfile() {
     this.isEditingProfile.update((v) => !v);
     if (!this.isEditingProfile()) {
       this.resetProfileForm(this.authService.userProfile());
     }
-    this.resetMessages();
+    this.clearMessages();
   }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        this.errorMessage.set('Image size must be less than 5MB');
-        this.closeImageModal();
+        this.showMessage('error', 'Image size must be less than 5MB');
         return;
       }
 
@@ -87,7 +111,7 @@ export class ProfileComponent {
   }
 
   async onUpdateProfile() {
-    this.resetMessages();
+    this.clearMessages();
     this.isUploading.set(true);
     try {
       await this.authService.updateProfile(
@@ -96,7 +120,7 @@ export class ProfileComponent {
         this.pendingFile
       );
 
-      this.successMessage.set('Profile updated successfully!');
+      this.showMessage('success', 'Profile updated successfully!');
       this.isEditingProfile.set(false);
 
       this.pendingFile = null;
@@ -104,18 +128,14 @@ export class ProfileComponent {
       this.imageTimestamp.set(Date.now());
     } catch (err: any) {
       if (err.error && err.error.message) {
-        this.errorMessage.set(err.error.message);
+        this.showMessage('error', err.error.message);
       } else {
-        this.errorMessage.set('Failed to update profile. Please try again.');
+        this.showMessage('error', 'Failed to update profile. Please try again.');
       }
     } finally {
       this.isUploading.set(false);
-    }
-  }
 
-  clearMessages() {
-    this.successMessage.set('');
-    this.errorMessage.set('');
+    }
   }
 
   toggleEditPassword() {
@@ -125,27 +145,27 @@ export class ProfileComponent {
       newPassword: '',
       confirmPassword: '',
     });
-    this.resetMessages();
+    this.clearMessages();
   }
 
   async onChangePassword() {
-    this.resetMessages();
+    this.clearMessages();
     const { currentPassword, newPassword, confirmPassword } =
       this.passwordForm();
 
     if (newPassword.length < 6) {
-      this.errorMessage.set('Password must be at least 6 characters.');
+      this.showMessage('error', 'Password must be at least 6 characters.');
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      this.errorMessage.set('New passwords do not match.');
+      this.showMessage('error', 'New passwords do not match.');
       return;
     }
 
     try {
       await this.authService.changePassword({ currentPassword, newPassword });
-      this.successMessage.set('Password updated successfully.');
+      this.showMessage('success', 'Password updated successfully.');
       this.isEditingPassword.set(false);
       this.passwordForm.set({
         currentPassword: '',
@@ -155,9 +175,9 @@ export class ProfileComponent {
       this.authService.fetchUserProfile();
     } catch (err: any) {
       if (err.error && err.error.message) {
-        this.errorMessage.set(err.error.message);
+        this.showMessage('error', err.error.message);
       } else {
-        this.errorMessage.set('Failed to update password. Please try again.');
+        this.showMessage('error', 'Failed to update password. Please try again.');
       }
     }
   }

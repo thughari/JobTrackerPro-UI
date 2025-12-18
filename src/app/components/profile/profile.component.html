@@ -1,4 +1,4 @@
-<div class="max-w-3xl mx-auto space-y-8 animate-fade-in relative">
+<div class="max-w-3xl mx-auto space-y-8 animate-fade-in relative pb-10">
 
     <div>
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">My Profile</h2>
@@ -28,8 +28,7 @@
     </div>
     }
 
-    <div
-        class="bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm transition-colors">
+    <div class="bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm transition-colors">
 
         <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 dark:border-gray-800">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
@@ -46,30 +45,32 @@
         <div class="p-6">
 
             @if (!isEditingProfile()) {
-            <div class="flex items-start gap-6">
-                <div class="relative">
+            <div class="flex items-center gap-4 md:gap-6">
+                
+                <div class="relative flex-shrink-0">
                     @if (authService.userProfile()?.imageUrl) {
                     <img [src]="getProfileImage()"
-                        class="w-24 h-24 rounded-full object-cover border-4 border-gray-50 dark:border-[#0B0E14] shadow-md">
+                        class="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-4 border-gray-50 dark:border-[#0B0E14] shadow-md">
                     } @else {
                     <div
-                        class="w-24 h-24 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-3xl font-bold border-4 border-gray-50 dark:border-[#0B0E14] shadow-md">
+                        class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-3xl font-bold border-4 border-gray-50 dark:border-[#0B0E14] shadow-md">
                         {{ profileForm().name.charAt(0) }}
                     </div>
                     }
                 </div>
 
-                <div class="flex-1 space-y-4 py-2">
+                <div class="flex-1 min-w-0 space-y-2">
                     <div>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Full
-                            Name</p>
-                        <p class="text-lg font-medium text-gray-900 dark:text-white">{{ authService.userProfile()?.name
-                            }}</p>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Full Name</p>
+                        <p class="text-lg font-medium text-gray-900 dark:text-white truncate">
+                            {{ authService.userProfile()?.name }}
+                        </p>
                     </div>
                     <div>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Email
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Email</p>
+                        <p class="text-base text-gray-900 dark:text-white truncate" title="{{ authService.userProfile()?.email }}">
+                            {{ authService.userProfile()?.email }}
                         </p>
-                        <p class="text-base text-gray-900 dark:text-white">{{ authService.userProfile()?.email }}</p>
                     </div>
                 </div>
             </div>
@@ -78,20 +79,17 @@
             @if (isEditingProfile()) {
             <div class="space-y-6 animate-fade-in">
 
-                <div class="flex items-center gap-6">
+                <div class="flex items-center gap-4 md:gap-6">
 
-                    <div class="relative group cursor-pointer" (click)="openImageModal()">
-
-                        <div
-                            class="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-100 dark:border-gray-700 shadow-md relative bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                    <div class="relative group cursor-pointer flex-shrink-0" (click)="openImageModal()">
+                        <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-gray-100 dark:border-gray-700 shadow-md relative bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
 
                             @if (profileForm().imageUrl) {
-                            <img [src]="getProfileImage()" class="w-full h-full object-cover">
+                                <img [src]="getProfileImage()" class="w-full h-full object-cover">
                             } @else {
-                            <div
-                                class="w-full h-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-3xl font-bold">
-                                {{ profileForm().name.charAt(0) }}
-                            </div>
+                                <div class="w-full h-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-3xl font-bold">
+                                    {{ profileForm().name.charAt(0) }}
+                                </div>
                             }
 
                             @if (isUploading()) {
@@ -101,17 +99,15 @@
                             }
 
                             @if (!isUploading()) {
-                            <div
-                                class="absolute bottom-0 right-0 w-8 h-8 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white dark:border-[#151A23] transition-transform hover:scale-110 z-10">
-                                <i class="ph ph-camera text-sm"></i>
+                            <div class="absolute bottom-0 right-0 w-7 h-7 md:w-8 md:h-8 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white dark:border-[#151A23] transition-transform hover:scale-110 z-10">
+                                <i class="ph ph-camera text-xs md:text-sm"></i>
                             </div>
                             }
                         </div>
                     </div>
 
-                    <div class="flex-1">
-                        <button (click)="openImageModal()"
-                            class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mb-1">
+                    <div class="flex-1 min-w-0">
+                        <button (click)="openImageModal()" class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mb-1">
                             Change Photo
                         </button>
                         <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -122,17 +118,14 @@
 
                 <div class="animate-fade-in">
                     <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Full Name</label>
-                    <input type="text" [(ngModel)]="profileForm().name"
-                        class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    <input type="text" [(ngModel)]="profileForm().name" class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
                 </div>
 
                 <div class="pt-2 flex justify-end gap-3">
-                    <button (click)="toggleEditProfile()"
-                        class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                    <button (click)="toggleEditProfile()" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
                         Cancel
                     </button>
-                    <button (click)="onUpdateProfile()"
-                        class="px-6 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow-lg shadow-indigo-500/20 transition-colors">
+                    <button (click)="onUpdateProfile()" class="px-6 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow-lg shadow-indigo-500/20 transition-colors">
                         Save Details
                     </button>
                 </div>
@@ -141,16 +134,14 @@
         </div>
     </div>
 
-    <div
-        class="bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm transition-colors">
+    <div class="bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm transition-colors">
 
         <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 dark:border-gray-800">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                 <i class="ph ph-lock-key"></i> Security
             </h3>
             @if (!isEditingPassword()) {
-            <button (click)="toggleEditPassword()"
-                class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1">
+            <button (click)="toggleEditPassword()" class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1">
                 <i class="ph ph-pencil-simple"></i> {{ userHasPassword() ? 'Change' : 'Set' }}
             </button>
             }
@@ -180,44 +171,35 @@
             <div class="space-y-4 animate-fade-in">
 
                 @if (!userHasPassword()) {
-                <div
-                    class="mb-2 p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg flex gap-3 text-sm text-blue-600 dark:text-blue-400">
-                    <i class="ph ph-info text-lg"></i>
-                    Set a password to enable email login.
-                </div>
+                    <div class="mb-2 p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg flex gap-3 text-sm text-blue-600 dark:text-blue-400">
+                        <i class="ph ph-info text-lg"></i>
+                        Set a password to enable email login.
+                    </div>
                 }
 
                 @if (userHasPassword()) {
                 <div>
-                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Current
-                        Password</label>
-                    <input type="password" [(ngModel)]="passwordForm().currentPassword"
-                        class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Current Password</label>
+                    <input type="password" [(ngModel)]="passwordForm().currentPassword" class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
                 </div>
                 }
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">New
-                            Password</label>
-                        <input type="password" [(ngModel)]="passwordForm().newPassword"
-                            class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">New Password</label>
+                        <input type="password" [(ngModel)]="passwordForm().newPassword" class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Confirm
-                            Password</label>
-                        <input type="password" [(ngModel)]="passwordForm().confirmPassword"
-                            class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Confirm Password</label>
+                        <input type="password" [(ngModel)]="passwordForm().confirmPassword" class="w-full bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
                     </div>
                 </div>
 
                 <div class="flex items-center justify-end gap-3 pt-2">
-                    <button (click)="toggleEditPassword()"
-                        class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                    <button (click)="toggleEditPassword()" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
                         Cancel
                     </button>
-                    <button (click)="onChangePassword()"
-                        class="px-6 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow-lg shadow-indigo-500/20 transition-colors">
+                    <button (click)="onChangePassword()" class="px-6 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow-lg shadow-indigo-500/20 transition-colors">
                         Save Password
                     </button>
                 </div>
@@ -230,13 +212,11 @@
 <!-- ========================================== -->
 <!-- IMAGE PICKER MODAL                         -->
 <!-- ========================================== -->
-
 @if (showImageModal()) {
 <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" (click)="closeImageModal()"></div>
 
-    <div
-        class="relative w-full max-w-md bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-scale-in">
+    <div class="relative w-full max-w-md bg-white dark:bg-[#151A23] border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-scale-in">
 
         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
             <h3 class="text-lg font-bold text-gray-900 dark:text-white">Update Profile Photo</h3>
@@ -247,11 +227,9 @@
 
         <div class="p-6 space-y-6">
 
-            <div (click)="fileInput.click()"
-                class="border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all group">
+            <div (click)="fileInput.click()" class="border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all group">
                 <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" class="hidden">
-                <div
-                    class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                     <i class="ph ph-upload-simple text-2xl"></i>
                 </div>
                 <p class="text-sm font-medium text-gray-900 dark:text-white">Click to upload image</p>
@@ -267,11 +245,8 @@
             <div class="space-y-3">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Image Link</label>
                 <div class="flex gap-2">
-                    <input type="text" [(ngModel)]="tempImageUrl"
-                        class="flex-1 bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                        placeholder="https://example.com/avatar.jpg">
-                    <button (click)="applyImageUrl()" [disabled]="!tempImageUrl()"
-                        class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg text-sm transition-colors">
+                    <input type="text" [(ngModel)]="tempImageUrl" class="flex-1 bg-gray-50 dark:bg-[#0B0E14] border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors" placeholder="https://example.com/avatar.jpg">
+                    <button (click)="applyImageUrl()" [disabled]="!tempImageUrl()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg text-sm transition-colors">
                         Use
                     </button>
                 </div>
