@@ -10,6 +10,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 import { AboutComponent } from './components/about/about.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { 
@@ -19,6 +20,10 @@ export const routes: Routes = [
   { 
     path: 'about', 
     component: AboutComponent 
+  },
+  { 
+    path: 'reset-password', 
+    component: ResetPasswordComponent
   },
   { 
     path: 'login', 

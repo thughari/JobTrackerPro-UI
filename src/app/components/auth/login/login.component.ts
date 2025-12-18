@@ -19,7 +19,10 @@ export class LoginComponent {
   email = '';
   password = '';
 
+  isForgotPasswordMode = false;
+
   errorMessage = signal<string>('');
+  successMessage = signal('');
   isLoading = signal<boolean>(false);
 
   async onSubmit() {
@@ -41,9 +44,36 @@ export class LoginComponent {
     }
   }
 
+  toggleMode() {
+    this.isForgotPasswordMode = !this.isForgotPasswordMode;
+    this.errorMessage.set('');
+    this.successMessage.set('');
+  }
+
+  async onForgotPassword() {
+    if (!this.email) {
+      this.errorMessage.set('Please enter your email.');
+      return;
+    }
+
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+    this.successMessage.set('');
+
+    try {
+      const res: any = await this.authService.forgotPassword(this.email);
+      console.log(res);
+      this.successMessage.set(res || 'Reset link sent! Check your inbox.');
+    } catch (err: any) {
+      this.errorMessage.set('Failed to send email.');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
   clearMessages() {
     this.errorMessage.set('');
-}
+  }
 
   socialLogin(provider: string) {
     window.location.href = `${this.API}/oauth2/authorization/${provider}`;

@@ -102,6 +102,26 @@ export class AuthService {
     );
   }
 
+  async forgotPassword(email: string) {
+    const formData = new FormData();
+    formData.append('email', email);
+
+    return await firstValueFrom(
+      this.http.post(`${this.apiUrl}/forgot-password`, formData, { 
+        responseType: 'text'
+      })
+    );
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    return await firstValueFrom(
+      this.http.post(`${this.apiUrl}/reset-password`, 
+        { token, newPassword }, 
+        { responseType: 'text' }
+      )
+    );
+  }
+
   private decodeToken() {
     const token = localStorage.getItem('token');
     return token ? { email: this.parseJwt(token).sub } : null;
