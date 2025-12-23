@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../../environments/environment';
+import { LogoComponent } from '../../ui/logo/logo.component';
 
 export interface SignUpUser {
   email: string;
@@ -14,7 +15,7 @@ export interface SignUpUser {
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule, LogoComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })

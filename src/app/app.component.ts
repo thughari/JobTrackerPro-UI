@@ -12,6 +12,7 @@ import { Job, JobService } from './services/job.service';
 import { ThemeService } from './services/theme.service';
 import { AuthService } from './services/auth.service';
 import { filter } from 'rxjs';
+import { LogoComponent } from './components/ui/logo/logo.component';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { filter } from 'rxjs';
     JobModalComponent,
     RouterOutlet,
     RouterLink,
+    LogoComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

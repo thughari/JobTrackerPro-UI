@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../../environments/environment';
+import { LogoComponent } from '../../ui/logo/logo.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule, LogoComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
