@@ -25,20 +25,18 @@ export class DashboardComponent implements OnInit {
     this.jobService.loadDashboard();
   }
 
-  interviewRate = computed(() => {
-    const total = this.stats().totalApplications;
-    const interviews = this.stats().interviews;
+  public statusColorMap: Record<string, string> = {
+    'Applied': '#6366f1',
+    'Shortlisted': '#a855f7',
+    'Interview Scheduled': '#f59e0b',
+    'Offer Received': '#10b981',
+    'Rejected': '#ef4444'
+  };
 
-    if (!total || total === 0) return 0;
-    return Math.round((interviews / total) * 100);
-  });
-
-  offerRate = computed(() => {
-    const interviews = this.stats().interviews;
-    const offers = this.stats().offers;
-
-    if (!interviews || interviews === 0) return 0;
-    return Math.round((offers / interviews) * 100);
+  orderedStatusColors = computed(() => {
+    return this.statusData().map(item => 
+      this.statusColorMap[item.name] || '#6b7280'
+    );
   });
 
   chartStrokeColor = computed(() =>
@@ -51,6 +49,19 @@ export class DashboardComponent implements OnInit {
     this.themeService.isDarkMode() ? '#6b7280' : '#6b7280'
   );
 
-  statusColors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#a855f7'];
   interviewColors = ['#10b981', '#d1d5db'];
+
+  interviewRate = computed(() => {
+    const total = this.stats().totalApplications;
+    const interviews = this.stats().interviews;
+    if (!total || total === 0) return 0;
+    return Math.round((interviews / total) * 100);
+  });
+
+  offerRate = computed(() => {
+    const interviews = this.stats().interviews;
+    const offers = this.stats().offers;
+    if (!interviews || interviews === 0) return 0;
+    return Math.round((offers / interviews) * 100);
+  });
 }

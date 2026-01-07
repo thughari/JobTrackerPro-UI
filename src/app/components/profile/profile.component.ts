@@ -39,6 +39,12 @@ export class ProfileComponent {
   pendingFile: File | null = null;
   localPreviewUrl = signal<string | null>(null);
 
+  showHelpModal = signal(false);
+
+  readonly atsFilterQuery = `from:(myworkday.com OR greenhouse.io OR lever.co OR smartrecruiters.com OR icims.com OR jobvite.com OR bamboo.hr OR workablemail.com OR successfactors.com OR taleo.net OR avature.net)`;
+
+  readonly subjectFilterQuery = `subject:("Application Received" OR "Application Confirmation" OR "Thank you for applying" OR "Interview Invitation" OR "Interview Request" OR "Coding Challenge" OR "Assessment Invitation" OR "Status of your application")`;
+
   private messageTimeout: any;
 
   userProfile = this.authService.userProfile();
@@ -130,11 +136,13 @@ export class ProfileComponent {
       if (err.error && err.error.message) {
         this.showMessage('error', err.error.message);
       } else {
-        this.showMessage('error', 'Failed to update profile. Please try again.');
+        this.showMessage(
+          'error',
+          'Failed to update profile. Please try again.'
+        );
       }
     } finally {
       this.isUploading.set(false);
-
     }
   }
 
@@ -177,7 +185,10 @@ export class ProfileComponent {
       if (err.error && err.error.message) {
         this.showMessage('error', err.error.message);
       } else {
-        this.showMessage('error', 'Failed to update password. Please try again.');
+        this.showMessage(
+          'error',
+          'Failed to update password. Please try again.'
+        );
       }
     }
   }
@@ -236,5 +247,27 @@ export class ProfileComponent {
         imageUrl: user.imageUrl || '',
       });
     }
+  }
+
+  openHelpModal() {
+    this.showHelpModal.set(true);
+  }
+
+  closeHelpModal() {
+    this.showHelpModal.set(false);
+  }
+
+  copyText(text: string) {
+    navigator.clipboard.writeText(text);
+    this.showMessage('success', 'Copied to clipboard!');
+  }
+
+  get inboundEmailAddress(): string {
+    return environment.inboundEmail;
+  }
+
+  copyEmail() {
+    navigator.clipboard.writeText(this.inboundEmailAddress);
+    this.showMessage('success', 'Forwarding address copied to clipboard!');
   }
 }

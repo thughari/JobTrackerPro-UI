@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
@@ -19,7 +20,7 @@ type SortDirection = 'asc' | 'desc';
   templateUrl: './application-list.component.html',
   styleUrl: './application-list.component.css',
 })
-export class ApplicationListComponent implements OnInit {
+export class ApplicationListComponent implements OnInit, OnDestroy {
 
   private jobService = inject(JobService);
 
@@ -30,12 +31,24 @@ export class ApplicationListComponent implements OnInit {
   currentPage = signal(1);
   pageSize = 8;
 
+  intervalId : any;
+
   activeMenuId = signal<string | null>(null);
 
   jobs = this.jobService.jobs;
 
   ngOnInit() {
     this.jobService.loadJobs();
+
+    this.intervalId = setInterval(() => {
+      this.jobService.loadJobs(true); 
+    }, 15000);
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   filteredJobs = computed(() => {

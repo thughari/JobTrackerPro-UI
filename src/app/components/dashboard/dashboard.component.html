@@ -65,12 +65,16 @@
     <div class="bg-white dark:bg-[#151A23] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col h-80 transition-colors duration-300">
       <h3 class="text-base font-semibold text-gray-900 dark:text-gray-200 mb-4 transition-colors">Applications by Status</h3>
       <div class="flex-1 min-h-0">
-        <app-donut-chart [data]="statusData()" [colors]="statusColors" [strokeColor]="chartStrokeColor()"></app-donut-chart>
+        <app-donut-chart 
+          [data]="statusData()" 
+          [colors]="orderedStatusColors()" 
+          [strokeColor]="chartStrokeColor()">
+        </app-donut-chart>
       </div>
       <div class="flex justify-center gap-3 mt-4 text-xs flex-wrap">
-        @for (item of statusData(); track item.name; let i = $index) {
+        @for (item of statusData(); track item.name) {
           <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full" [style.background-color]="statusColors[i % statusColors.length]"></span>
+            <span class="w-2 h-2 rounded-full" [style.background-color]="statusColorMap[item.name] || '#6b7280'"></span>
             <span class="text-gray-500 dark:text-gray-400">{{ item.name }}</span>
           </div>
         }
