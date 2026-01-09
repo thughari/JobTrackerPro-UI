@@ -160,25 +160,22 @@
 
     <div class="space-y-6">
       <h2 class="text-2xl font-bold text-white">Engineering Challenges I Solved</h2>
-
       <div class="grid md:grid-cols-2 gap-6">
         <div class="p-5 border border-gray-800 rounded-xl bg-gradient-to-br from-[#151A23] to-[#0B0E14]">
           <h4 class="font-bold text-white flex items-center gap-2 mb-2">
             <i class="ph ph-lock-key text-green-500"></i> Hybrid Security
           </h4>
           <p class="text-sm text-gray-400">
-            I designed a custom auth system supporting both JWT-based local authentication and OAuth2 (Google/GitHub),
-            allowing seamless account linking.
+            I designed a custom auth system supporting both JWT-based local authentication and OAuth2 (Google/GitHub), allowing seamless account linking.
           </p>
         </div>
 
         <div class="p-5 border border-gray-800 rounded-xl bg-gradient-to-br from-[#151A23] to-[#0B0E14]">
           <h4 class="font-bold text-white flex items-center gap-2 mb-2">
-            <i class="ph ph-lightning text-yellow-500"></i> Async Performance
+            <i class="ph ph-robot text-purple-500"></i> AI Webhook Pipeline
           </h4>
           <p class="text-sm text-gray-400">
-            I leveraged Java `CompletableFuture` to calculate dashboard analytics in parallel threads, ensuring the
-            dashboard loads instantly even with large datasets.
+            I architected an inbound email parser using <strong>Google Gemini AI</strong>. It processes webhooks from Cloudmailin, extracts structured data from unstructured emails, and performs smart upserts to the database.
           </p>
         </div>
 
@@ -187,18 +184,16 @@
             <i class="ph ph-database text-blue-500"></i> Atomic Data Integrity
           </h4>
           <p class="text-sm text-gray-400">
-            I implemented transactional logic for profile updates. File uploads and text data are handled atomically,
-            and orphaned files in R2 are automatically cleaned up.
+            I implemented transactional logic for profile updates. File uploads and text data are handled atomically, and orphaned files in R2 are automatically cleaned up.
           </p>
         </div>
 
         <div class="p-5 border border-gray-800 rounded-xl bg-gradient-to-br from-[#151A23] to-[#0B0E14]">
           <h4 class="font-bold text-white flex items-center gap-2 mb-2">
-            <i class="ph ph-paint-brush text-purple-500"></i> Modern UX
+            <i class="ph ph-lightning text-yellow-500"></i> Multi-threaded Analytics
           </h4>
           <p class="text-sm text-gray-400">
-            I used Optimistic UI patterns in Angular to make interactions feel instant, while handling background
-            synchronization and error states gracefully.
+            I leveraged Java `CompletableFuture` to calculate dashboard analytics in parallel threads, ensuring the dashboard loads instantly even with large datasets.
           </p>
         </div>
       </div>
