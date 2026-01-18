@@ -20,9 +20,9 @@ export class DashboardComponent implements OnInit {
   isRefreshing = signal(false);
   showHelpModal = signal(false);
   
-  showToast = signal(false);
-  toastMessage = signal('');
-  private toastTimeout: any;
+  successMessage = signal('');
+  errorMessage = signal('');
+  private messageTimeout: any;
 
   inboundEmail = environment.inboundEmail;
   
@@ -48,7 +48,6 @@ export class DashboardComponent implements OnInit {
     this.isRefreshing.set(false);
   }
 
-
   openHelpModal() {
     this.showHelpModal.set(true);
   }
@@ -57,21 +56,36 @@ export class DashboardComponent implements OnInit {
     this.showHelpModal.set(false);
   }
 
+  showMessage(type: 'success' | 'error', message: string) {
+    this.clearMessages();
+
+    if (type === 'success') {
+      this.successMessage.set(message);
+    } else {
+      this.errorMessage.set(message);
+    }
+
+    this.messageTimeout = setTimeout(() => {
+      this.clearMessages();
+    }, 5000);
+  }
+
   copyEmail() {
     navigator.clipboard.writeText(this.inboundEmail);
-    this.triggerToast('Email copied to clipboard!');
+    this.showMessage('success', 'Forwarding address copied to clipboard!');
   }
 
   copyText(text: string) {
     navigator.clipboard.writeText(text);
-    this.triggerToast('Copied to clipboard!');
+    this.showMessage('success', 'Copied to clipboard!');
   }
 
-  triggerToast(msg: string) {
-    this.toastMessage.set(msg);
-    this.showToast.set(true);
-    if (this.toastTimeout) clearTimeout(this.toastTimeout);
-    this.toastTimeout = setTimeout(() => this.showToast.set(false), 3000);
+  clearMessages() {
+    this.successMessage.set('');
+    this.errorMessage.set('');
+    if (this.messageTimeout) {
+      clearTimeout(this.messageTimeout);
+    }
   }
 
   openAddModal() {
